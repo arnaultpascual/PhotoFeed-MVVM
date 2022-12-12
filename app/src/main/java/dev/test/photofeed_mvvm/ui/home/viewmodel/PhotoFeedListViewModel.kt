@@ -9,5 +9,7 @@ import javax.inject.Inject
 class PhotoFeedListViewModel @Inject constructor(private val photosRepository: PhotosRepository) :
     ViewModel() {
 
+    //default nb column for grid layout
+    var spanCount = 3
 
 }
