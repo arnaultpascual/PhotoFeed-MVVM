@@ -1,5 +1,6 @@
 package dev.test.photofeed_mvvm.ui.home.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,9 +19,12 @@ class PhotoFeedListViewModel @Inject constructor(private val photosRepository: P
 
     //default nb column for grid layout
     var spanCount = 3
+
+    var firstLaunch = true
+
     //needed for swipe refresh layout state
     var isRefreshing = false
-
+    
     fun fetchPhotoFeed() {
         viewModelScope.launch {
             photosRepository.fetchPhotoFeed().collect(){

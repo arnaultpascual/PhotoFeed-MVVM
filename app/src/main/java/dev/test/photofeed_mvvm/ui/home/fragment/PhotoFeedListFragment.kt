@@ -1,6 +1,9 @@
 package dev.test.photofeed_mvvm.ui.home.fragment
 
+import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +12,11 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.faltenreich.skeletonlayout.Skeleton
+import com.faltenreich.skeletonlayout.SkeletonConfig
+import com.faltenreich.skeletonlayout.applySkeleton
 import dagger.hilt.android.AndroidEntryPoint
+import dev.test.photofeed_mvvm.R
 import es.dmoral.toasty.Toasty
 import dev.test.photofeed_mvvm.databinding.FragmentPhotoFeedListBinding
 import dev.test.photofeed_mvvm.ui.home.adapter.PhotoAdapter
@@ -31,6 +38,8 @@ class PhotoFeedListFragment : Fragment() {
     private lateinit var mGridViewManager: GridLayoutManager
 
     lateinit var mPhotoAdapter: PhotoAdapter
+
+    lateinit var skeletonRecyclerView: Skeleton
 
     companion object {
         fun newInstance() = PhotoFeedListFragment()
@@ -81,11 +90,8 @@ class PhotoFeedListFragment : Fragment() {
             when (resource.status) {
                 Status.SUCCESS -> {
 
-                    mViewModel.isRefreshing = false
-                    binding.refreshLayout.isRefreshing = mViewModel.isRefreshing
-
                     resource.data?.let { photoList ->
-                        mPhotoAdapter.setPhotoList(photoList)
+                        bindUiWithSuccessfullyRemoteReturn(photoList)
                     }
                 }
                 Status.ERROR -> {
@@ -104,6 +110,7 @@ class PhotoFeedListFragment : Fragment() {
 
                                 resource.data.let { photoList ->
                                     mPhotoAdapter.setPhotoList(photoList)
+                                    skeletonRecyclerView.showOriginal()
                                 }
                             }else{
                                 Toasty.error(
@@ -123,12 +130,40 @@ class PhotoFeedListFragment : Fragment() {
                 }
                 Status.LOADING -> {
 
-                    mViewModel.isRefreshing = true
-                    binding.refreshLayout.isRefreshing = mViewModel.isRefreshing
+                    if (mViewModel.firstLaunch || mViewModel.isRefreshing){
+                        setupSkeletonForRecyclerView()
+                    }
                 }
                 else -> {}
             }
         })
+    }
+
+    /**
+     * Init the RV of [Skeleton] to match the [ArrayList]<[PhotoItem]> RV
+     */
+    private fun setupSkeletonForRecyclerView(){
+        skeletonRecyclerView = binding.rvPhoto.applySkeleton(
+            R.layout.photo_grid_item_shimmer,
+            25,
+            SkeletonConfig.default(requireContext())
+        )
+
+        skeletonRecyclerView.shimmerAngle = 45
+        skeletonRecyclerView.maskCornerRadius = 28.toFloat()
+        skeletonRecyclerView.showSkeleton()
+    }
+
+    private fun bindUiWithSuccessfullyRemoteReturn(photoList : ArrayList<PhotoItem>){
+        if (mViewModel.firstLaunch || mViewModel.isRefreshing){
+            Handler(Looper.getMainLooper()).postDelayed({
+                mPhotoAdapter.setPhotoList(photoList)
+                skeletonRecyclerView.showOriginal()
+                mViewModel.firstLaunch = false
+                mViewModel.isRefreshing = false
+                binding.refreshLayout.isRefreshing = mViewModel.isRefreshing
+            }, 1000)
+        }
     }
 
     /**
