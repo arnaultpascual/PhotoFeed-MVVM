@@ -41,7 +41,8 @@ class PhotoAdapter(private val listener: PhotoAdapterListener) : RecyclerView.Ad
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                )
+                ),
+                listener
             )
         }else{
             return PhotoListViewHolder(
@@ -49,7 +50,8 @@ class PhotoAdapter(private val listener: PhotoAdapterListener) : RecyclerView.Ad
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                )
+                ),
+                listener
             )
         }
     }
