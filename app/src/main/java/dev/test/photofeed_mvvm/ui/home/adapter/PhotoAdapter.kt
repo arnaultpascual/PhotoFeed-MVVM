@@ -10,7 +10,14 @@ import dev.test.photofeed_mvvm.databinding.PhotoGridItemBinding
 import dev.test.photofeed_mvvm.databinding.PhotoListItemBinding
 import dev.test.photofeed_mvvm.model.local.PhotoItem
 
-class PhotoAdapter : RecyclerView.Adapter<PhotoGridAndListViewHolder>() {
+class PhotoAdapter(private val listener: PhotoAdapterListener) : RecyclerView.Adapter<PhotoGridAndListViewHolder>() {
+
+    //the interface needed to get clicked data from everywhere we need outside of the adapter
+    interface PhotoAdapterListener {
+        fun onPhotoClicked(imageView: View,
+                           photo: PhotoItem,
+                           position : Int)
+    }
 
     /**
      * The [PhotoItem] list used in this adapter
@@ -105,15 +112,16 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoGridAndListViewHolder>() {
     override fun getItemCount(): Int {
         return mPhotoList.size
     }
-
 }
 
 open class PhotoGridAndListViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
 /**
  * @param binding : [PhotoGridItemBinding]
+ * @param listener : [PhotoAdapter.PhotoAdapterListener]
  */
-class PhotoGridViewHolder(private val binding: PhotoGridItemBinding)
+class PhotoGridViewHolder(private val binding: PhotoGridItemBinding,
+                          listener: PhotoAdapter.PhotoAdapterListener)
     : PhotoGridAndListViewHolder(binding.root) {
 
     val photoImg   = binding.photoImg
@@ -122,8 +130,10 @@ class PhotoGridViewHolder(private val binding: PhotoGridItemBinding)
 
 /**
  * @param binding : [PhotoGridItemBinding]
+ * @param listener : [PhotoAdapter.PhotoAdapterListener]
  */
-class PhotoListViewHolder(private val binding: PhotoListItemBinding)
+class PhotoListViewHolder(private val binding: PhotoListItemBinding,
+                          listener: PhotoAdapter.PhotoAdapterListener)
     : PhotoGridAndListViewHolder(binding.root) {
 
     val photoImg   = binding.photoImg

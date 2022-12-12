@@ -31,7 +31,7 @@ import dev.test.photofeed_mvvm.util.state.Status
  * create an instance of this fragment.
  */
 @AndroidEntryPoint
-class PhotoFeedListFragment : Fragment() {
+class PhotoFeedListFragment : Fragment(), PhotoAdapter.PhotoAdapterListener {
 
     private lateinit var binding : FragmentPhotoFeedListBinding
     private val mViewModel by viewModels<PhotoFeedListViewModel>()
@@ -98,7 +98,7 @@ class PhotoFeedListFragment : Fragment() {
     private fun initGridRecyclerView(){
         mGridViewManager = GridLayoutManager(requireContext(), mViewModel.spanCount)
         if (!::mPhotoAdapter.isInitialized)
-            mPhotoAdapter = PhotoAdapter()
+            mPhotoAdapter = PhotoAdapter(this)
 
         mViewModel.displayInGridStyle = true
         mPhotoAdapter.displayInGridStyle = true
@@ -116,7 +116,7 @@ class PhotoFeedListFragment : Fragment() {
     private fun initListRecyclerView(){
         mLinearViewManager = LinearLayoutManager(requireContext())
         if (!::mPhotoAdapter.isInitialized)
-            mPhotoAdapter = PhotoAdapter()
+            mPhotoAdapter = PhotoAdapter(this)
 
         mViewModel.displayInGridStyle = false
         mPhotoAdapter.displayInGridStyle = false
@@ -218,5 +218,13 @@ class PhotoFeedListFragment : Fragment() {
             initGridRecyclerView()
             mViewModel.fetchPhotoFeed()
         }
+    }
+
+    override fun onPhotoClicked(imageView: View, photo: PhotoItem, position: Int) {
+
+        val args = Bundle()
+        args.putParcelable("clickedPhoto", photo)
+
+        TODO("Not yet implemented")
     }
 }
