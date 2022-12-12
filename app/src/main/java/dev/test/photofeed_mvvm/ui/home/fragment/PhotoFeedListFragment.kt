@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.SkeletonConfig
 import com.faltenreich.skeletonlayout.applySkeleton
@@ -36,6 +37,7 @@ class PhotoFeedListFragment : Fragment() {
     private val mViewModel by viewModels<PhotoFeedListViewModel>()
 
     private lateinit var mGridViewManager: GridLayoutManager
+    private lateinit var mLinearViewManager: LinearLayoutManager
 
     lateinit var mPhotoAdapter: PhotoAdapter
 
@@ -65,10 +67,29 @@ class PhotoFeedListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initGridRecyclerView()
+        setOnClickListeners()
         setRefreshLayoutListener()
+        initRecyclerView()
         setObserver()
         mViewModel.fetchPhotoFeed()
+    }
+
+    private fun initRecyclerView(){
+        setRecyclerViewStyle()
+    }
+
+    private fun setRecyclerViewStyle(){
+        if (mViewModel.displayInGridStyle)
+            initGridRecyclerView()
+        else
+            initListRecyclerView()
+    }
+
+    private fun setOnClickListeners(){
+        binding.fab.setOnClickListener {
+            mViewModel.displayInGridStyle = !mViewModel.displayInGridStyle
+            setRecyclerViewStyle()
+        }
     }
 
     /**
@@ -79,10 +100,32 @@ class PhotoFeedListFragment : Fragment() {
         if (!::mPhotoAdapter.isInitialized)
             mPhotoAdapter = PhotoAdapter()
 
+        mViewModel.displayInGridStyle = true
+        mPhotoAdapter.displayInGridStyle = true
         binding.rvPhoto.apply {
             layoutManager = mGridViewManager
             adapter = mPhotoAdapter
         }
+
+        binding.fab.setImageResource(R.drawable.ic_list)
+    }
+
+    /**
+     * Init the Grid RV of [ArrayList]<[PhotoItem]>
+     */
+    private fun initListRecyclerView(){
+        mLinearViewManager = LinearLayoutManager(requireContext())
+        if (!::mPhotoAdapter.isInitialized)
+            mPhotoAdapter = PhotoAdapter()
+
+        mViewModel.displayInGridStyle = false
+        mPhotoAdapter.displayInGridStyle = false
+        binding.rvPhoto.apply {
+            layoutManager = mLinearViewManager
+            adapter = mPhotoAdapter
+        }
+
+        binding.fab.setImageResource(R.drawable.ic_grid)
     }
 
     private fun setObserver() {

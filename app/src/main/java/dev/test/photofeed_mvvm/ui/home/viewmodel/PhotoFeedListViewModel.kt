@@ -17,11 +17,12 @@ class PhotoFeedListViewModel @Inject constructor(private val photosRepository: P
 
     val photoFeedList = MutableLiveData<Resource<ArrayList<PhotoItem>>>()
 
+    //default display in grid
+    var displayInGridStyle = true
     //default nb column for grid layout
     var spanCount = 3
 
     var firstLaunch = true
-
     //needed for swipe refresh layout state
     var isRefreshing = false
     
