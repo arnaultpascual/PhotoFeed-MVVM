@@ -103,7 +103,7 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoGridAndListViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return mPhotoList.size
     }
 
 }
