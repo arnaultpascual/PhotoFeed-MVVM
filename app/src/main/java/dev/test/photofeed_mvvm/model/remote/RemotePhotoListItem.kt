@@ -2,7 +2,7 @@ package dev.test.photofeed_mvvm.model.remote
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import dev.test.bruxlessphotofeed.model.local.PhotoItem
+import dev.test.photofeed_mvvm.model.local.PhotoItem
 import dev.test.photofeed_mvvm.model.remote.Urls
 import kotlinx.parcelize.Parcelize
 
@@ -46,7 +46,7 @@ data class RemotePhotoListItem(
     val downloads: Int
 ) : Parcelable {
 
-    fun translate() : PhotoItem{
+    fun translate() : PhotoItem {
         val localPhotoItem = PhotoItem(id = this.id, exif = null)
 
         if (this.user != null)

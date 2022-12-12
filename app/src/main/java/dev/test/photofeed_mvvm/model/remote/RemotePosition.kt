@@ -2,7 +2,7 @@ package dev.test.photofeed_mvvm.model.remote
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import dev.test.bruxlessphotofeed.model.local.Position
+import dev.test.photofeed_mvvm.model.local.Position
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -13,7 +13,7 @@ data class RemotePosition(
     val longitude: Double?
 ) : Parcelable {
 
-    fun translate() : Position{
+    fun translate() : Position {
         val localPosition= Position()
 
         if (this.latitude != null)
