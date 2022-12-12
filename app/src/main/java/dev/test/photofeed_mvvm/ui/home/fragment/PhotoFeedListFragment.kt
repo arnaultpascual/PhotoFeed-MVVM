@@ -54,8 +54,8 @@ class PhotoFeedListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initGridRecyclerView()
+        mViewModel.fetchPhotoFeed()
     }
-
 
     /**
      * Init the Grid RV of [ArrayList]<[PhotoItem]>
