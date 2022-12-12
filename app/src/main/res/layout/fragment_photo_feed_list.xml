@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.fragment.PhotoFeedListFragment"
+    android:background="@mipmap/gradient_bg"
     app:navGraph="@navigation/nav_graph">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
