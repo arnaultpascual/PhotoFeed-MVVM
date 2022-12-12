@@ -18,6 +18,8 @@ class PhotoFeedListViewModel @Inject constructor(private val photosRepository: P
 
     //default nb column for grid layout
     var spanCount = 3
+    //needed for swipe refresh layout state
+    var isRefreshing = false
 
     fun fetchPhotoFeed() {
         viewModelScope.launch {

@@ -57,6 +57,7 @@ class PhotoFeedListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initGridRecyclerView()
+        setRefreshLayoutListener()
         setObserver()
         mViewModel.fetchPhotoFeed()
     }
@@ -79,11 +80,19 @@ class PhotoFeedListFragment : Fragment() {
         mViewModel.photoFeedList.observe(viewLifecycleOwner, Observer { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
+
+                    mViewModel.isRefreshing = false
+                    binding.refreshLayout.isRefreshing = mViewModel.isRefreshing
+
                     resource.data?.let { photoList ->
                         mPhotoAdapter.setPhotoList(photoList)
                     }
                 }
                 Status.ERROR -> {
+
+                    mViewModel.isRefreshing = false
+                    binding.refreshLayout.isRefreshing = mViewModel.isRefreshing
+
                     resource.message?.let {
                         if (resource.data != null){
                             if (resource.data.isNotEmpty()) {
@@ -113,10 +122,23 @@ class PhotoFeedListFragment : Fragment() {
                     }
                 }
                 Status.LOADING -> {
+
+                    mViewModel.isRefreshing = true
+                    binding.refreshLayout.isRefreshing = mViewModel.isRefreshing
                 }
                 else -> {}
             }
         })
     }
 
+    /**
+     * get updated data with remote call on swipe
+     */
+    private fun setRefreshLayoutListener(){
+        binding.refreshLayout.setOnRefreshListener {
+            mViewModel.isRefreshing = true
+            initGridRecyclerView()
+            mViewModel.fetchPhotoFeed()
+        }
+    }
 }
