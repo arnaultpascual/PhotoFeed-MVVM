@@ -45,7 +45,7 @@ object NetworkModule {
                 val newRequest = chain.request().newBuilder()
                     .addHeader("X-Client-SDK-INT", "${Build.VERSION.SDK_INT}")
                     .addHeader("X-Client-Name", "dev.test.photofeed_mvvm")
-                    .addHeader("Authorization", "Client-ID KEGCgF0jbivpTEZTo6_XUZw5rnPx49CFYIFga33dUA4")
+                    .addHeader("Authorization", "Client-ID TrCOO9DS7ZPAKbkdOKQ7kKMm-1p4JPGFvVVw4au-iiw")
                     .build()
                 chain.proceed(newRequest)
             }
