@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,10 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmap
-import androidx.core.view.drawToBitmap
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import dev.test.photofeed_mvvm.databinding.FragmentPhotoDetailBinding
@@ -24,9 +21,6 @@ import dev.test.photofeed_mvvm.ui.detail.viewmodel.PhotoDetailViewModel
 import dev.test.photofeed_mvvm.util.state.Status
 import es.dmoral.toasty.Toasty
 import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 
 /**
  * A simple [Fragment] subclass.
@@ -61,7 +55,8 @@ class PhotoDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        setOnClickListeners()
+        setObserver()
         mViewModel.fetchPhotoFromGivenId()
     }
 
@@ -86,6 +81,12 @@ class PhotoDetailFragment : Fragment() {
         })
     }
 
+    private fun setOnClickListeners(){
+        binding.shareBtnLt.setOnClickListener {
+            sharePicture()
+        }
+    }
+
     /**
      * Setup the data img before request for transition
      * put the low quality img in thumbnail so we have
@@ -101,6 +102,21 @@ class PhotoDetailFragment : Fragment() {
             .into(binding.photoDetailImg)
     }
 
+    /**
+     * Get the image that we draw in the [ImageView]
+     * Store it temporary
+     * Launch the shared activity
+     */
+    private fun sharePicture(){
+        val intent = Intent(Intent.ACTION_SEND).setType("image/*")
+        val bitmap = binding.photoDetailImg.drawable.toBitmap()
+        val bytes = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(requireContext().contentResolver, bitmap, "tempimage", null)
+        val uri = Uri.parse(path)
+        intent.putExtra(Intent.EXTRA_STREAM, uri)
+        startActivity(intent)
+    }
 
     companion object {
         @JvmStatic
