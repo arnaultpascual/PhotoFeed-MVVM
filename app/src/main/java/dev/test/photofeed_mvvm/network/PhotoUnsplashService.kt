@@ -21,4 +21,14 @@ interface PhotoUnsplashService {
         @Query("per_page") nbItemPerPage : Int = 100
     ) : Response<List<RemotePhotoListItem>>
 
+    /**
+     * Function needed to get the specific photo form given id
+     * @param id : [String] => the wanted [RemotePhotoListItem]
+     * @return [Response]<[RemotePhotoListItem]>
+     */
+    @GET("photos/{id}")
+    suspend fun getPhotoFromGivenId(
+        @Path("id") id : String
+    ) : Response<RemotePhotoListItem>
+
 }
