@@ -27,6 +27,20 @@ class PhotoRemoteDataSource @Inject constructor(private val retrofit: Retrofit) 
     }
 
     /**
+     * Fetch photo from the unsplash API
+     * @param id : [String] => the id of the photo we want
+     * @return [Resource]<[RemotePhotoListItem]>
+     */
+    suspend fun fetchGivenPhoto(id : String): Resource<RemotePhotoListItem> {
+        val photoService = retrofit.create((PhotoUnsplashService::class.java))
+        return getResponse(
+            request = {photoService.getPhotoFromGivenId(id)},
+            defaultErrorMessage = "Error while getting the given photo"
+
+        )
+    }
+
+    /**
      * Generic response getter
      * @return [Resource]<[T]>
      */

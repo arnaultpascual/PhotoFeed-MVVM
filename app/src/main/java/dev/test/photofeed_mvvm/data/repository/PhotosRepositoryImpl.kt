@@ -47,4 +47,32 @@ class PhotosRepositoryImpl @Inject constructor(
             }
         }.flowOn(Dispatchers.IO)
     }
+
+    /**
+     * fetch specific photo from the unsplash API and translate it to [PhotoItem]
+     * @return [Flow]<[Resource]<[ArrayList]<[PhotoItem]>>>
+     */
+    override suspend fun fetchPhotoFromGivenId(id : String) : Flow<Resource<PhotoItem>> {
+        return flow {
+            emit(Resource.loading())
+
+            val distantResource = remoteDataSource.fetchGivenPhoto(id)
+
+            if (distantResource.data != null
+                && distantResource.status == Status.SUCCESS
+            ) {
+
+                emit(
+                    Resource(
+                        Status.SUCCESS,
+                        distantResource.data.translate(),
+                        distantResource.message,
+                        null
+                    )
+                )
+            } else {
+                emit(Resource(Status.ERROR, null, "cannot load", distantResource.errorMessage))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
 }

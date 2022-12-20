@@ -7,5 +7,6 @@ import kotlinx.coroutines.flow.Flow
 interface PhotosRepository {
 
     suspend fun fetchPhotoFeed() : Flow<Resource<ArrayList<PhotoItem>>>
+    suspend fun fetchPhotoFromGivenId(id : String) : Flow<Resource<PhotoItem>>
 
 }
