@@ -10,6 +10,15 @@
         android:name="dev.test.photofeed_mvvm.ui.home.fragment.PhotoFeedListFragment"
         android:label="PhotoFeedListFragment"
         tools:layout="@layout/fragment_photo_feed_list">
+        <action
+            android:id="@+id/action_photoFeedListFragment_to_photoDetailFragment"
+            app:destination="@id/photoDetailFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/photoDetailFragment"
+        android:name="dev.test.photofeed_mvvm.ui.detail.fragment.PhotoDetailFragment"
+        android:label="fragment_photo_detail"
+        tools:layout="@layout/fragment_photo_detail" />
 
 </navigation>

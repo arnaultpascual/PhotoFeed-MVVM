@@ -9,8 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.faltenreich.skeletonlayout.Skeleton
@@ -23,6 +26,7 @@ import dev.test.photofeed_mvvm.databinding.FragmentPhotoFeedListBinding
 import dev.test.photofeed_mvvm.ui.home.adapter.PhotoAdapter
 import dev.test.photofeed_mvvm.ui.home.viewmodel.PhotoFeedListViewModel
 import dev.test.photofeed_mvvm.model.local.PhotoItem
+import dev.test.photofeed_mvvm.ui.detail.fragment.PhotoDetailFragment
 import dev.test.photofeed_mvvm.util.state.Status
 
 /**
@@ -222,9 +226,24 @@ class PhotoFeedListFragment : Fragment(), PhotoAdapter.PhotoAdapterListener {
 
     override fun onPhotoClicked(imageView: View, photo: PhotoItem, position: Int) {
 
+        //destination Fragment
+        val fragment = PhotoDetailFragment()
         val args = Bundle()
         args.putParcelable("clickedPhoto", photo)
 
-        TODO("Not yet implemented")
+        //animation data
+        ViewCompat.setTransitionName(imageView, "detail_photo")
+
+        val extras = FragmentNavigatorExtras(
+            imageView to "detail_photo",
+        )
+        //--------------//
+
+        findNavController().navigate(
+            R.id.action_photoFeedListFragment_to_photoDetailFragment,
+            args,
+            null,
+            extras
+        )
     }
 }

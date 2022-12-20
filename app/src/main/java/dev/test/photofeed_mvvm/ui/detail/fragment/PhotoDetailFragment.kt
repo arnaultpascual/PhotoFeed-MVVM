@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import dev.test.photofeed_mvvm.R
+import dagger.hilt.android.AndroidEntryPoint
 import dev.test.photofeed_mvvm.databinding.FragmentPhotoDetailBinding
 import dev.test.photofeed_mvvm.model.local.PhotoItem
 import dev.test.photofeed_mvvm.ui.detail.viewmodel.PhotoDetailViewModel
@@ -16,6 +16,7 @@ import dev.test.photofeed_mvvm.ui.detail.viewmodel.PhotoDetailViewModel
  * Use the [PhotoDetailFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class PhotoDetailFragment : Fragment() {
 
     private lateinit var binding : FragmentPhotoDetailBinding
@@ -30,7 +31,7 @@ class PhotoDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentPhotoDetailBinding.inflate(layoutInflater)
 
         /** get [PhotoItem] from the args of the previous fragment */

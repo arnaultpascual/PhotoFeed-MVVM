@@ -10,7 +10,8 @@ import dev.test.photofeed_mvvm.databinding.PhotoGridItemBinding
 import dev.test.photofeed_mvvm.databinding.PhotoListItemBinding
 import dev.test.photofeed_mvvm.model.local.PhotoItem
 
-class PhotoAdapter(private val listener: PhotoAdapterListener) : RecyclerView.Adapter<PhotoGridAndListViewHolder>() {
+class PhotoAdapter(private val listener: PhotoAdapterListener)
+    : RecyclerView.Adapter<PhotoGridAndListViewHolder>() {
 
     //the interface needed to get clicked data from everywhere we need outside of the adapter
     interface PhotoAdapterListener {
@@ -85,6 +86,14 @@ class PhotoAdapter(private val listener: PhotoAdapterListener) : RecyclerView.Ad
 
         holder.artistName.text = currentPhotoItem.authorName
         holder.description.text = currentPhotoItem.description
+
+        holder.itemView.setOnClickListener {
+            listener.onPhotoClicked(
+                holder.photoImg,
+                currentPhotoItem,
+                position
+            )
+        }
     }
 
     /**
@@ -109,6 +118,14 @@ class PhotoAdapter(private val listener: PhotoAdapterListener) : RecyclerView.Ad
         holder.photoImg.layoutParams = layoutParamsImg
 
         holder.artistName.text = currentPhotoItem.authorName
+
+        holder.itemView.setOnClickListener {
+            listener.onPhotoClicked(
+                holder.photoImg,
+                currentPhotoItem,
+                position
+            )
+        }
     }
 
     override fun getItemCount(): Int {
