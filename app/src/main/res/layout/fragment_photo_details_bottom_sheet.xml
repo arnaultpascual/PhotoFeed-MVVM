@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:backgroundTint="@android:color/transparent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#303030"
+        app:cardCornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/detail_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Détails"
+                android:textColor="@color/white"
+                android:layout_margin="16dp"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/calendar_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginStart="24dp"
+                android:src="@drawable/event"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_tv" />
+
+            <TextView
+                android:id="@+id/created_at"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Crée le : 21/08/09"
+                android:textColor="@color/white"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/calendar_icon"
+                app:layout_constraintStart_toEndOf="@+id/calendar_icon"
+                app:layout_constraintTop_toTopOf="@+id/calendar_icon" />
+
+            <ImageView
+                android:id="@+id/image_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="24dp"
+                android:src="@drawable/image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/calendar_icon" />
+
+            <TextView
+                android:id="@+id/image_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12.6Mpx - 4096x3072"
+                android:textColor="@color/white"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/image_icon"
+                app:layout_constraintStart_toEndOf="@+id/image_icon"
+                app:layout_constraintTop_toTopOf="@+id/image_icon" />
+
+
+            <ImageView
+                android:id="@+id/camera_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="24dp"
+                android:src="@drawable/photo_camera"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_icon" />
+
+            <TextView
+                android:id="@+id/camera_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="camera name "
+                android:textColor="@color/white"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/camera_icon"
+                app:layout_constraintStart_toEndOf="@+id/camera_icon"
+                app:layout_constraintTop_toTopOf="@+id/camera_icon" />
+
+            <ImageView
+                android:id="@+id/aperture_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/aperture"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/camera_icon" />
+
+            <TextView
+                android:id="@+id/exif_aperture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="exif aperture"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/aperture_image"
+                app:layout_constraintStart_toEndOf="@+id/aperture_image"
+                app:layout_constraintTop_toTopOf="@+id/aperture_image" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:background="#d3d3d3"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/aperture_image" />
+
+            <TextView
+                android:id="@+id/location_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lieu"
+                android:textColor="@color/white"
+                android:layout_margin="16dp"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view" />
+
+            <TextView
+                android:id="@+id/location_title_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:maxLines="2"
+                android:text="Marseille"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/location_tv" />
+
+            <View
+                android:id="@+id/maps_separator"
+                android:layout_width="match_parent"
+                android:background="#d3d3d3"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/location_title_tv" />
+
+            <ImageView
+                android:id="@+id/view_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/eye"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/maps_separator" />
+
+            <TextView
+                android:id="@+id/nb_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="1250 vues"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/view_image"
+                app:layout_constraintStart_toEndOf="@+id/view_image"
+                app:layout_constraintTop_toTopOf="@+id/view_image" />
+
+            <ImageView
+                android:id="@+id/download_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/download"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view_image" />
+
+            <TextView
+                android:id="@+id/nb_download"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="6575 downloads"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/download_image"
+                app:layout_constraintStart_toEndOf="@+id/download_image"
+                app:layout_constraintTop_toTopOf="@+id/download_image" />
+
+            <ImageView
+                android:id="@+id/like_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/heart"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/download_image" />
+
+            <TextView
+                android:id="@+id/nb_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="6575 likes"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/like_image"
+                app:layout_constraintStart_toEndOf="@+id/like_image"
+                app:layout_constraintTop_toTopOf="@+id/like_image" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

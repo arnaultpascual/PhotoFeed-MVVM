@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import dev.test.photofeed_mvvm.databinding.FragmentPhotoDetailBinding
 import dev.test.photofeed_mvvm.model.local.PhotoItem
+import dev.test.photofeed_mvvm.ui.detail.dialog.PhotoDetailsBottomSheetFragment
 import dev.test.photofeed_mvvm.ui.detail.viewmodel.PhotoDetailViewModel
 import dev.test.photofeed_mvvm.util.state.Status
 import es.dmoral.toasty.Toasty
@@ -31,6 +32,8 @@ import java.io.ByteArrayOutputStream
 class PhotoDetailFragment : Fragment() {
 
     private lateinit var binding : FragmentPhotoDetailBinding
+
+    lateinit var bottomSheetDialog : PhotoDetailsBottomSheetFragment
 
     private val mViewModel by viewModels<PhotoDetailViewModel>()
 
@@ -65,12 +68,14 @@ class PhotoDetailFragment : Fragment() {
             when (resource.status) {
                 Status.SUCCESS -> {
                     resource.data?.let { photoWithDetail ->
+                        createDetailsFragment(photoWithDetail)
                     }
                 }
                 Status.ERROR -> {
                     resource.message?.let {
                         Toasty.error(requireContext(), "network error, retrieve local data",
                             Toast.LENGTH_SHORT, true).show();
+                        createDetailsFragment(mViewModel.chosenPhotoFromList)
                     }
                 }
                 Status.LOADING -> {
@@ -82,9 +87,19 @@ class PhotoDetailFragment : Fragment() {
     }
 
     private fun setOnClickListeners(){
+        binding.infoBtnLt.setOnClickListener {
+            bottomSheetDialog.show(childFragmentManager, "DetailsBottomSheet")
+        }
         binding.shareBtnLt.setOnClickListener {
             sharePicture()
         }
+    }
+
+    /**
+     * @param photoWithDetail : [PhotoItem]
+     */
+    private fun createDetailsFragment(photoWithDetail : PhotoItem){
+        bottomSheetDialog = PhotoDetailsBottomSheetFragment(photoWithDetail)
     }
 
     /**
