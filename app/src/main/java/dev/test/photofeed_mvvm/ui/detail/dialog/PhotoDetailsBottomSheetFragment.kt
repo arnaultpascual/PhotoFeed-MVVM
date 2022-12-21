@@ -67,6 +67,11 @@ class PhotoDetailsBottomSheetFragment(val photoItem: PhotoItem) : BottomSheetDia
                 binding.cameraName.text = photoItem.exif!!.name
             else
                 binding.cameraName.text = "Pas de modèle référencé"
+
+            if (!photoItem.exif!!.aperture.isNullOrEmpty())
+                binding.exifAperture.text = "Ouverture : " + photoItem.exif!!.aperture
+            else
+                binding.exifAperture.text = "Pas d'ouverture spécifiée'"
         }else{
             binding.cameraName.text = "Pas de modèle référencé"
             binding.exifAperture.text = "Pas de données spécifiques"
