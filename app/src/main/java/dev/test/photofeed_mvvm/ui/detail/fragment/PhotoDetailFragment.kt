@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import dev.test.photofeed_mvvm.databinding.FragmentPhotoDetailBinding
@@ -36,6 +37,20 @@ class PhotoDetailFragment : Fragment() {
     lateinit var bottomSheetDialog : PhotoDetailsBottomSheetFragment
 
     private val mViewModel by viewModels<PhotoDetailViewModel>()
+
+    /**
+     * @param savedInstanceState : [Bundle]?
+     */
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // inflate the shared element animation for photo
+        val animation = TransitionInflater.from(requireContext())
+            .inflateTransition(android.R.transition.move)
+
+        sharedElementEnterTransition = animation
+    }
+
 
     /**
      * @param inflater : [LayoutInflater]
@@ -62,6 +77,7 @@ class PhotoDetailFragment : Fragment() {
         setObserver()
         mViewModel.fetchPhotoFromGivenId()
     }
+
 
     private fun setObserver(){
         mViewModel.chosenPhotoWithExif.observe(viewLifecycleOwner, Observer { resource ->

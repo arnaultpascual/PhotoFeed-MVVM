@@ -16,6 +16,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.TransitionInflater
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.SkeletonConfig
 import com.faltenreich.skeletonlayout.applySkeleton
@@ -59,9 +60,20 @@ class PhotoFeedListFragment : Fragment(), PhotoAdapter.PhotoAdapterListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentPhotoFeedListBinding.inflate(layoutInflater)
         return binding.root
+    }
+
+    /**
+     * @param savedInstanceState
+     */
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        exitTransition = TransitionInflater.from(requireContext())
+            .inflateTransition(android.R.transition.fade);
+        enterTransition = TransitionInflater.from(requireContext())
+            .inflateTransition(android.R.transition.fade);
     }
 
     /**
